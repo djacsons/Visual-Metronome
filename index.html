@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="index.css">
+    <title>Visual Metronome</title>
+</head>
+<body class="flex">
+    <header>
+        <h1>Visual Metronome</h1>
+    </header>
+    <main class="flex">
+        <div class="display" id="display"></div>
+        <div class="mainBox">
+            <div class="outputArea flex" id="outputArea">1</div>
+            <div class="inputArea">
+                <button class="lowerBtn" id="lowerBtn" style="font-size: 30px;">&lt</button>
+                <input type="text" maxlength="3" id="mainInput">
+                <button class="raiseBtn" id="raiseBtn" style="font-size: 30px;">&gt</button>
+            </div>
+            <p style="font-size: 30px; margin: 0;">Time Signature</p>
+            <select name="timeSig" id="timeSig">
+                <option value="4/4" class="options">4/4</option>
+                <option value="2/4" class="options">2/4</option>
+                <option value="3/4" class="options">3/4</option>
+                <option value="5/4" class="options">5/4</option>
+            </select>
+        </div>
+        <script src="main.js"></script>
+    </main>
+</body>
+</html>
