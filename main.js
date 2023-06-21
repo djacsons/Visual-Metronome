@@ -4,6 +4,7 @@ const lowerBtn = document.getElementById('lowerBtn')
 const mainInput = document.getElementById('mainInput')
 const outputArea = document.getElementById('outputArea')
 const timeSig = document.getElementsByTagName('select')[0]
+mainInput.value = 90
 let currentBpm = Number(mainInput.value)
 let totalBeats = 4
 let displayMaxWidth = 90
