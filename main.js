@@ -1,66 +1,61 @@
+//MODEL:
 const display = document.getElementById('display')
 const raiseBtn = document.getElementById('raiseBtn')
 const lowerBtn = document.getElementById('lowerBtn')
 const mainInput = document.getElementById('mainInput')
+let mainNum = Number(mainInput.value)
 const outputArea = document.getElementById('outputArea')
 const timeSig = document.getElementsByTagName('select')[0]
-let currentBpm = Number(mainInput.value)
-let totalBeats = 4
+const options = document.getElementsByClassName('options')
+let currentBeat = 4
+let currentTimSig = timeSig.value
 let displayMaxWidth = 90
 let beat=0
 
-pageUpdate = setInterval(() => {
-    function timeSignature(){
-        if (timeSig.value == '4/4') totalBeats = 4
-        else if (timeSig.value == '2/4') totalBeats = 2
-        else if (timeSig.value == '3/4') totalBeats = 3
-        else if (timeSig.value == '5/4') totalBeats = 5
-    }
-    timeSignature()
-    //console.log('update')
-}, 1000);
+//VIEW:
 
-mainInt = (currentBpm)=>{
-    return 1000*(60/currentBpm)
+//CONTROLLER:
+tempoChange = ()=>{
+    let arr1 = [raiseBtn, lowerBtn]
+    arr1.forEach(element => {
+        element.addEventListener('click', ()=>{
+                if (element.id == 'lowerBtn' && mainNum>0){
+                    mainNum-=1
+                    console.log('lowered time')
+                }
+                else if (element.id == 'raiseBtn' && mainNum<1000){
+                    mainNum+=1
+                    console.log('raised time')
+                }
+        })
+    });
 }
+tempoChange()
 
-lightFlash = (beat)=>{
-    setTimeout(() => {
-        if (beat==1){
-            display.style.backgroundColor = 'rgb(222, 84, 84)'
-        }
-        else display.style.backgroundColor = 'rgb(204, 224, 255)'
-    }, 100);
-    display.style.backgroundColor = ''
+timSigChange = ()=>{
+    let arr1 = [options[0], options[1], options[2], options[3]]
+    arr1.forEach(element => {
+        element.addEventListener('click', ()=>{
+            totalBeats = Number(element.value.split('/')[0])
+            console.log(`${totalBeats} beats`)
+        })
+    });
 }
+timSigChange()
 
-displaySize = (beat)=>{
-    let percent = displayMaxWidth/beat
-    display.style.width = `${percent}%`
-}
-
-mainInterval = setInterval(() => {
-    let arr1 = [1, 2, 3, 4, 5]
-    if (beat==totalBeats) beat=0
-
-    outputArea.innerHTML = arr1[beat]
-    beat++
-    //console.log(currentBpm)
-
-    lightFlash(beat)
-    displaySize(beat)
-}, mainInt(currentBpm));
-
-inputChanger = ()=>{
-    raiseBtn.addEventListener('click', ()=>{
-        currentBpm+=1
-        mainInput.value = currentBpm.toString()
-        clearInterval(mainInterval)
-    })
-    lowerBtn.addEventListener('click', ()=>{
-        currentBpm-=1
-        mainInput.value = currentBpm.toString()
-        clearInterval(mainInterval)
+manTempChange = ()=>{
+    //interval for active input area...
+    mainInput.addEventListener('click', ()=>{
+        console.log('input clicked')
+        interval1 = setInterval(() => {
+            mainNum = Number(mainInput.value)
+            console.log('interval active')
+            stopInputInterval(interval1)
+        }, 500);
     })
 }
-inputChanger()
+manTempChange()
+
+stopInputInterval = (interval1)=>{
+    if (document.activeElement.id != 'mainInput'){clearInterval(interval1)}
+}
