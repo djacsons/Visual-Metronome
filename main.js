@@ -20,11 +20,11 @@ pageUpdate = setInterval(() => {
     //console.log('update')
 }, 1000);
 
-function mainInt(currentBpm){
+mainInt = (currentBpm)=>{
     return 1000*(60/currentBpm)
 }
 
-function lightFlash(beat){
+lightFlash = (beat)=>{
     setTimeout(() => {
         if (beat==1){
             display.style.backgroundColor = 'rgb(222, 84, 84)'
@@ -34,7 +34,7 @@ function lightFlash(beat){
     display.style.backgroundColor = ''
 }
 
-function displaySize(beat){
+displaySize = (beat)=>{
     let percent = displayMaxWidth/beat
     display.style.width = `${percent}%`
 }
@@ -51,7 +51,7 @@ mainInterval = setInterval(() => {
     displaySize(beat)
 }, mainInt(currentBpm));
 
-function inputChanger(){
+inputChanger = ()=>{
     raiseBtn.addEventListener('click', ()=>{
         currentBpm+=1
         mainInput.value = currentBpm.toString()
