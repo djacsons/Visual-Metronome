@@ -1,3 +1,6 @@
+//Bugs/Issues:
+//When page first loads, numbers go crazy (reload to solve it)
+
 //MODEL:
 const display = document.getElementById('display')
 const raiseBtn = document.getElementById('raiseBtn')
