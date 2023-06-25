@@ -16,6 +16,11 @@ let displayMaxWidth = 90
 let beat=0
 let numCountInterval
 let tempChangeInterval
+
+//default BPM so page doesn't go crazy:
+mainInput.value = '100'
+
+
 //to add onclick to each time signature:
 let arrOptions = [options[0], options[1], options[2], options[3]]
 arrOptions.forEach(element => {
@@ -54,24 +59,31 @@ numCounter = ()=>{
     clearInterval(numCountInterval)
     let millisecs = (1000*60)/mainNum
 
-    //creates array with number of beats:
+    //array with number of beats:
     let arr1 = [1, 2, 3, 4, 5, 6, 7, 8]
 
     //cycles through array:
     let numCycler = 0
     numCountInterval = setInterval(() => {
         if (numCycler == totalBeats) numCycler = 0
+        lightFlasher(arr1[numCycler], millisecs)
         outputArea.innerHTML = arr1[numCycler]
-        lightFlasher(arr1[numCycler])
         numCycler++
         console.log('count')
     }, millisecs);
 }
 numCounter()
 
-lightFlasher = (currentBeat)=>{
-    if (currentBeat == 1){display.style.backgroundColor == 'red'}
-    else {display.style.backgroundColor == 'blue'}
+lightFlasher = (currentBeat, milli)=>{
+    setTimeout(() => {
+       if (currentBeat == 1){
+        display.style.backgroundColor = 'rgba(213, 51, 36, 0.8)'
+        }
+        else {
+            display.style.backgroundColor = 'rgba(109, 202, 213, 0.8)'
+        }
+    }, milli/2);
+    display.style.backgroundColor = ''
 }
 
 /////////////////////CONTROLLER:

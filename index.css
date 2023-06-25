@@ -1,13 +1,13 @@
 body{
     margin-top: 5rem;
-    background-color: rgb(255, 212, 128);
+    background-color: rgba(136, 144, 213, 0.8);
 }
 main{
-    background-color: rgb(210, 166, 121);
+    background-color: rgba(43, 135, 234, 0.8);
     width: 40rem;
     height: 40rem;
     border: 1px solid rgb(0, 0, 0);
-    border-radius: 20px;
+    border-radius: 30px;
     justify-content: space-evenly;
     box-shadow: 12px 12px 10px rgb(46, 39, 39);
 }
@@ -54,6 +54,10 @@ main{
     height: 100%;
     border-radius: inherit;
     cursor: pointer;
+    background-color: rgba(35, 81, 131, 0.63);
+}
+.inputArea button:active{
+    background-color: rgba(92, 146, 204, 0.63)
 }
 .inputArea input {
     height: 80%;
@@ -61,6 +65,7 @@ main{
     font-size: 60px;
     text-align: center;
     border-radius: inherit;
+    background-color: inherit;
 }
 .flex{
     display: flex;
