@@ -1,6 +1,3 @@
-//Bugs/Issues:
-//When page first loads, numbers go crazy (reload to solve it)
-
 //MODEL:
 const display = document.getElementById('display')
 const raiseBtn = document.getElementById('raiseBtn')
@@ -22,7 +19,8 @@ let tempChangeInterval
 
 //default BPM so page doesn't go crazy:
 mainInput.value = '100'
-
+mainNum = 100
+/////////////////////////
 
 //to add onclick to each time signature:
 let arrOptions = [options[0], options[1], options[2], options[3]]
@@ -70,9 +68,10 @@ numCounter = ()=>{
     numCountInterval = setInterval(() => {
         if (numCycler == totalBeats) numCycler = 0
         lightFlasher(arr1[numCycler], millisecs)
+        lightShrinker(arr1[numCycler], totalBeats)
         outputArea.innerHTML = arr1[numCycler]
         numCycler++
-        console.log('count')
+        //console.log('count')
     }, millisecs);
 }
 numCounter()
@@ -89,10 +88,11 @@ lightFlasher = (currentBeat, milli)=>{
     display.style.backgroundColor = ''
 }
 
+lightShrinker = (currentBeat, total)=>{
+    display.style.width = `${displayMaxWidth-(displayMaxWidth)*(1/total)*(currentBeat-1)}%`
+}
+
 /////////////////////CONTROLLER:
-
-
-
 
 tempoChange = ()=>{
     let arr1 = [raiseBtn, lowerBtn]
@@ -100,11 +100,11 @@ tempoChange = ()=>{
         element.addEventListener('click', ()=>{
                 if (element.id == 'lowerBtn' && mainNum>0){
                     mainNum-=1
-                    console.log('lowered time')
+                    //console.log('lowered time')
                 }
                 else if (element.id == 'raiseBtn' && mainNum<1000){
                     mainNum+=1
-                    console.log('raised time')
+                    //console.log('raised time')
                 }
         })
     });
@@ -116,7 +116,7 @@ timSigChange = ()=>{
         element.addEventListener('click', ()=>{
             totalBeats = Number(element.value.split('/')[0])
             noteType = Number(element.value.split('/')[1])
-            console.log(`${totalBeats} beats, ${noteType} is note type`)
+            //console.log(`${totalBeats} beats, ${noteType} is note type`)
         })
     });
 }
@@ -127,7 +127,7 @@ manTempChange = ()=>{
     mainInput.addEventListener('click', ()=>{
         let tempValue
         let tempNum = 0
-        console.log('input clicked')
+        //console.log('input clicked')
         document.addEventListener('click', ()=>{
             if (document.activeElement.id!='mainInput'){
                 mainNum = Number(mainInput.value)
@@ -143,11 +143,11 @@ manTempChange = ()=>{
             }
             if (tempNum == 6){
                 clearInterval(inputTimer)
-                console.log('interval cleared')
+                //console.log('interval cleared')
                 mainNum = Number(mainInput.value)
                 document.activeElement.blur()
             }
-            console.log(tempNum)
+            //console.log(tempNum)
         }, 500);
     })
 }
