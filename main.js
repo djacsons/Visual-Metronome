@@ -7,14 +7,78 @@ let mainNum = Number(mainInput.value)
 const outputArea = document.getElementById('outputArea')
 const timeSig = document.getElementsByTagName('select')[0]
 const options = document.getElementsByClassName('options')
-let currentBeat = 4
+const mainBox = document.getElementsByClassName('mainBox')[0]
+let totalBeats = Number(timeSig.value.split('/')[0])
+let resetCounter
+let noteType = 4
 let currentTimSig = timeSig.value
 let displayMaxWidth = 90
 let beat=0
+let numCountInterval
+let tempChangeInterval
+//to add onclick to each time signature:
+let arrOptions = [options[0], options[1], options[2], options[3]]
+arrOptions.forEach(element => {
+    element.addEventListener('click', ()=>{
+        //clearInterval(numCountInterval)
+        numCounter()
+    })
+});
 
-//VIEW:
 
-//CONTROLLER:
+//////////////////////VIEW:
+
+viewUpdate = ()=>{
+    document.addEventListener('click', ()=>{
+        if (document.activeElement.id == "raiseBtn" || document.activeElement.id == "lowerBtn"){
+            mainInput.value = mainNum.toString()
+            //clearInterval(numCountInterval)
+            numCounter()
+        }
+        else if (document.activeElement.id == "mainInput"){
+            clearInterval(numCountInterval)
+            outputArea.innerHTML = 'updating...'
+            inputChecker = setInterval(() => {
+                if (document.activeElement.id != "mainInput"){
+                    numCounter()
+                    clearInterval(inputChecker)
+                }
+            }, 200);
+        }
+
+    })
+}
+viewUpdate()
+
+numCounter = ()=>{
+    clearInterval(numCountInterval)
+    let millisecs = (1000*60)/mainNum
+
+    //creates array with number of beats:
+    let arr1 = [1, 2, 3, 4, 5, 6, 7, 8]
+
+    //cycles through array:
+    let numCycler = 0
+    numCountInterval = setInterval(() => {
+        if (numCycler == totalBeats) numCycler = 0
+        outputArea.innerHTML = arr1[numCycler]
+        lightFlasher(arr1[numCycler])
+        numCycler++
+        console.log('count')
+    }, millisecs);
+}
+numCounter()
+
+lightFlasher = (currentBeat)=>{
+    if (currentBeat == 1){display.style.backgroundColor == 'red'}
+    else {display.style.backgroundColor == 'blue'}
+}
+
+/////////////////////CONTROLLER:
+
+
+
+
 tempoChange = ()=>{
     let arr1 = [raiseBtn, lowerBtn]
     arr1.forEach(element => {
@@ -33,11 +97,11 @@ tempoChange = ()=>{
 tempoChange()
 
 timSigChange = ()=>{
-    let arr1 = [options[0], options[1], options[2], options[3]]
-    arr1.forEach(element => {
+    arrOptions.forEach(element => {
         element.addEventListener('click', ()=>{
             totalBeats = Number(element.value.split('/')[0])
-            console.log(`${totalBeats} beats`)
+            noteType = Number(element.value.split('/')[1])
+            console.log(`${totalBeats} beats, ${noteType} is note type`)
         })
     });
 }
@@ -46,11 +110,29 @@ timSigChange()
 manTempChange = ()=>{
     //interval for active input area...
     mainInput.addEventListener('click', ()=>{
+        let tempValue
+        let tempNum = 0
         console.log('input clicked')
-        interval1 = setInterval(() => {
-            mainNum = Number(mainInput.value)
-            console.log('interval active')
-            stopInputInterval(interval1)
+        document.addEventListener('click', ()=>{
+            if (document.activeElement.id!='mainInput'){
+                mainNum = Number(mainInput.value)
+                clearInterval(inputTimer)
+            }
+        })
+        //to listen out for input area being idle:
+        let inputTimer = setInterval(() => {
+            if (tempValue == mainInput.value) tempNum++
+            else if (tempValue!=mainInput.value) {
+                tempValue = mainInput.value
+                tempNum = 0
+            }
+            if (tempNum == 6){
+                clearInterval(inputTimer)
+                console.log('interval cleared')
+                mainNum = Number(mainInput.value)
+                document.activeElement.blur()
+            }
+            console.log(tempNum)
         }, 500);
     })
 }
